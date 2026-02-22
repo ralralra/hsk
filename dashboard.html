@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한상경 후보 실시간 설문조사 대시보드</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e3a5f;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #ff6b35;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .status-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .status-indicator.loading {
+            background: #ffa600;
+        }
+        .status-indicator.success {
+            background: #28a745;
+        }
+        .status-indicator.error {
+            background: #dc3545;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .status-text {
+            flex: 1;
+            font-weight: 500;
+        }
+        .refresh-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #ff6b35;
+            margin: 10px 0;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 1em;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            font-size: 1.2em;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #1e3a5f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .error-panel {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .error-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .error-title {
+            font-size: 1.5em;
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .error-details {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 한상경 충남교육감 후보</h1>
+            <div class="subtitle">실시간 설문조사 대시보드</div>
+        </header>
+
+        <div class="status-bar">
+            <div class="status-indicator loading" id="statusIndicator"></div>
+            <div class="status-text" id="statusText">초기화 중...</div>
+            <button class="refresh-btn" onclick="loadData()">🔄 새로고침</button>
+        </div>
+
+        <div id="dashboardContent"></div>
+    </div>
+
+    <script>
+        // ⚙️ Apps Script URL (localStorage에서 가져오거나 여기서 설정)
+        let API_URL = localStorage.getItem('apiUrl') || 'https://script.google.com/macros/s/AKfycbzl6EDqI1HwFcXVRL80L7FF7o4wCxvAquK7k95SAvK9R7LOmHv-KgDsBhfTBUU3lBUFDQ/exec';
+
+        let charts = {};
+        let autoRefreshInterval;
+        let isLoading = false;
+
+        // 페이지 로드 시 실행
+        window.addEventListener('load', () => {
+            console.log('🚀 페이지 로드됨');
+            console.log('💾 저장된 API_URL:', API_URL);
+            
+            if (!API_URL) {
+                showSetupRequired();
+            } else {
+                loadData();
+                // 30초마다 자동 새로고침
+                autoRefreshInterval = setInterval(() => loadData(), 30000);
+            }
+        });
+
+        function showSetupRequired() {
+            updateStatus('⚙️ API URL 설정이 필요합니다', 'error');
+            document.getElementById('dashboardContent').innerHTML = `
+                <div class="error-panel">
+                    <div class="error-icon">⚙️</div>
+                    <div class="error-title">초기 설정이 필요합니다</div>
+                    <div class="error-details">
+                        Apps Script 웹 앱 URL이 설정되지 않았습니다.<br>
+                        브라우저 콘솔(F12)에서 다음 명령어를 실행하세요:
+                    </div>
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: monospace; margin: 20px 0;">
+                        localStorage.setItem('apiUrl', 'YOUR_APPS_SCRIPT_URL_HERE');
+                    </div>
+                    <div class="error-details">
+                        YOUR_APPS_SCRIPT_URL_HERE 부분을 실제 Apps Script URL로 교체하세요.<br>
+                        (예: https://script.google.com/macros/s/ABC.../exec)
+                    </div>
+                    <button class="refresh-btn" onclick="location.reload()">페이지 새로고침</button>
+                </div>
+            `;
+        }
+
+        function updateStatus(text, type = 'loading') {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            
+            indicator.className = `status-indicator ${type}`;
+            statusText.textContent = text;
+        }
+
+        async function loadData() {
+            if (isLoading) {
+                console.log('⏳ 이미 로딩 중...');
+                return;
+            }
+
+            if (!API_URL) {
+                showSetupRequired();
+                return;
+            }
+
+            isLoading = true;
+            updateStatus('데이터를 불러오는 중...', 'loading');
+            console.log('📡 API 호출 시작:', API_URL);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+
+                console.log('📥 응답 상태:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                console.log('📊 받은 데이터:', result);
+
+                if (result.status === 'error') {
+                    throw new Error(result.message);
+                }
+
+                if (!result.data || result.data.length === 0) {
+                    throw new Error('구글 시트에 데이터가 없습니다. 헤더와 최소 1개의 응답이 필요합니다.');
+                }
+
+                processData(result.data);
+                updateStatus(`✅ 연결 성공! ${result.count}개 응답 (${new Date().toLocaleTimeString('ko-KR')})`, 'success');
+
+            } catch (error) {
+                console.error('❌ 오류 발생:', error);
+                updateStatus(`❌ 오류: ${error.message}`, 'error');
+                showError(error.message);
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        function processData(data) {
+            console.log('🔄 데이터 처리 시작:', data.length, '개');
+            
+            document.getElementById('dashboardContent').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">총 응답 수</div>
+                        <div class="stat-number" id="totalResponses">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">평균 지지도</div>
+                        <div class="stat-number" id="avgSupport">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">적극 지지</div>
+                        <div class="stat-number" id="strongSupport">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">최다 응답 지역</div>
+                        <div class="stat-number" id="topRegion" style="font-size: 1.8em;">-</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">📊 지지도 분포</div>
+                        <canvas id="supportChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">👥 연령대별 응답</div>
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">📍 지역별 응답</div>
+                        <canvas id="regionChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">⚠️ 시급한 교육 문제</div>
+                        <canvas id="issueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="chart-title">📋 최근 응답 데이터 (최신 20건)</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>제출시간</th>
+                                <th>성명</th>
+                                <th>연령대</th>
+                                <th>지역</th>
+                                <th>지지도</th>
+                                <th>중요 공약</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            `;
+
+            updateStats(data);
+            drawCharts(data);
+            updateTable(data);
+            
+            console.log('✅ 데이터 처리 완료');
+        }
+
+        function updateStats(data) {
+            document.getElementById('totalResponses').textContent = data.length;
+
+            const supportKey = Object.keys(data[0]).find(key => 
+                key.includes('지지') || key.toLowerCase().includes('support')
+            );
+
+            const supportCounts = {};
+            data.forEach(row => {
+                const support = row[supportKey] || '';
+                if (support.trim()) {
+                    supportCounts[support] = (supportCounts[support] || 0) + 1;
+                }
+            });
+
+            const strongSupportCount = Object.keys(supportCounts).reduce((sum, key) => {
+                if (key.includes('매우') || key.includes('적극')) {
+                    return sum + supportCounts[key];
+                }
+                return sum;
+            }, 0);
+
+            const strongSupportPercent = Math.round((strongSupportCount / data.length) * 100);
+            document.getElementById('strongSupport').textContent = strongSupportPercent + '%';
+
+            const supportScores = {
+                '매우 지지함': 5, '적극 지지': 5, '지지': 4, '약간 지지': 4,
+                '보통': 3, '지지하지 않음': 2, '전혀 지지하지 않음': 1
+            };
+            
+            let totalScore = 0;
+            data.forEach(row => {
+                const support = row[supportKey] || '보통';
+                totalScore += supportScores[support] || 3;
+            });
+            
+            const avgPercent = Math.round((totalScore / data.length / 5) * 100);
+            document.getElementById('avgSupport').textContent = avgPercent + '%';
+
+            const regionKey = Object.keys(data[0]).find(key => 
+                key.includes('지역') || key.toLowerCase().includes('region')
+            );
+
+            const regionCounts = {};
+            data.forEach(row => {
+                const region = row[regionKey] || '';
+                if (region.trim()) {
+                    regionCounts[region] = (regionCounts[region] || 0) + 1;
+                }
+            });
+
+            const topRegion = Object.keys(regionCounts).reduce((a, b) => 
+                regionCounts[a] > regionCounts[b] ? a : b, '-');
+            document.getElementById('topRegion').textContent = topRegion;
+        }
+
+        function drawCharts(data) {
+            const supportKey = Object.keys(data[0]).find(key => 
+                key.includes('지지') || key.toLowerCase().includes('support')
+            );
+            const supportCounts = {};
+            data.forEach(row => {
+                const support = row[supportKey] || '';
+                if (support.trim()) supportCounts[support] = (supportCounts[support] || 0) + 1;
+            });
+
+            const ctx1 = document.getElementById('supportChart').getContext('2d');
+            if (charts.support) charts.support.destroy();
+            charts.support = new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(supportCounts),
+                    datasets: [{
+                        data: Object.values(supportCounts),
+                        backgroundColor: ['#ff6b35', '#ffa600', '#ffcc00', '#90caf9', '#e0e0e0']
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            const ageKey = Object.keys(data[0]).find(key => key.includes('연령') || key.toLowerCase().includes('age'));
+            const ageCounts = {};
+            data.forEach(row => {
+                const age = row[ageKey] || '';
+                if (age.trim()) ageCounts[age] = (ageCounts[age] || 0) + 1;
+            });
+
+            const ctx2 = document.getElementById('ageChart').getContext('2d');
+            if (charts.age) charts.age.destroy();
+            charts.age = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(ageCounts),
+                    datasets: [{ label: '응답 수', data: Object.values(ageCounts), backgroundColor: '#ff6b35' }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            });
+
+            const regionKey = Object.keys(data[0]).find(key => key.includes('지역') || key.toLowerCase().includes('region'));
+            const regionCounts = {};
+            data.forEach(row => {
+                const region = row[regionKey] || '';
+                if (region.trim()) regionCounts[region] = (regionCounts[region] || 0) + 1;
+            });
+
+            const ctx3 = document.getElementById('regionChart').getContext('2d');
+            if (charts.region) charts.region.destroy();
+            charts.region = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(regionCounts),
+                    datasets: [{ label: '응답 수', data: Object.values(regionCounts), backgroundColor: '#1e3a5f' }]
+                },
+                options: { indexAxis: 'y', responsive: true, scales: { x: { beginAtZero: true } } }
+            });
+
+            const issueKey = Object.keys(data[0]).find(key => key.includes('시급') || key.includes('문제'));
+            const issueCounts = {};
+            data.forEach(row => {
+                const issues = row[issueKey] || '';
+                issues.split(',').forEach(issue => {
+                    issue = issue.trim();
+                    if (issue) issueCounts[issue] = (issueCounts[issue] || 0) + 1;
+                });
+            });
+
+            const ctx4 = document.getElementById('issueChart').getContext('2d');
+            if (charts.issue) charts.issue.destroy();
+            charts.issue = new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(issueCounts),
+                    datasets: [{ label: '선택 횟수', data: Object.values(issueCounts), backgroundColor: '#ffa600' }]
+                },
+                options: { indexAxis: 'y', responsive: true, scales: { x: { beginAtZero: true } } }
+            });
+        }
+
+        function updateTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            const recent = data.slice(-20).reverse();
+            
+            const timeKey = Object.keys(data[0])[0];
+            const nameKey = Object.keys(data[0]).find(key => key.includes('성명') || key.includes('이름') || key.includes('성함'));
+            const ageKey = Object.keys(data[0]).find(key => key.includes('연령'));
+            const regionKey = Object.keys(data[0]).find(key => key.includes('지역'));
+            const supportKey = Object.keys(data[0]).find(key => key.includes('지지'));
+            const policyKey = Object.keys(data[0]).find(key => key.includes('공약'));
+
+            recent.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row[timeKey] || '-'}</td>
+                    <td>${row[nameKey] || '-'}</td>
+                    <td>${row[ageKey] || '-'}</td>
+                    <td>${row[regionKey] || '-'}</td>
+                    <td>${row[supportKey] || '-'}</td>
+                    <td>${row[policyKey] || '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('dashboardContent').innerHTML = `
+                <div class="error-panel">
+                    <div class="error-icon">⚠️</div>
+                    <div class="error-title">데이터 로드 실패</div>
+                    <div class="error-details">${message}</div>
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: left;">
+                        <strong>확인사항:</strong><br>
+                        1. Apps Script가 올바르게 배포되었는지<br>
+                        2. 액세스 권한이 "모든 사용자"로 설정되었는지<br>
+                        3. 구글 시트에 데이터가 있는지<br>
+                        4. 시트 이름이 "설문조사_결과"인지
+                    </div>
+                    <button class="refresh-btn" onclick="loadData()">🔄 다시 시도</button>
+                </div>
+            `;
+        }
+
+        // 디버깅용 - 콘솔에서 URL 설정/확인
+        window.setApiUrl = function(url) {
+            localStorage.setItem('apiUrl', url);
+            API_URL = url;
+            console.log('✅ API URL 저장됨:', url);
+            location.reload();
+        };
+
+        window.getApiUrl = function() {
+            console.log('💾 현재 API URL:', localStorage.getItem('apiUrl'));
+        };
+
+        window.clearApiUrl = function() {
+            localStorage.removeItem('apiUrl');
+            console.log('🗑️ API URL 삭제됨');
+            location.reload();
+        };
+
+        console.log('💡 사용 가능한 명령어:');
+        console.log('  setApiUrl("YOUR_URL") - API URL 설정');
+        console.log('  getApiUrl() - 현재 URL 확인');
+        console.log('  clearApiUrl() - URL 삭제');
+    </script>
+</body>
+</html>
