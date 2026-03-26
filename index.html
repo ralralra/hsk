@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한상경 충남교육감 예비후보 | 말이 아닌 성과로 증명하겠습니다</title>
+  <meta name="description" content="현장과 행정, 기관 운영을 두루 경험한 교육 전문가 한상경. 기초학력, 통합·포용교육, AI·과학 미래교육으로 충남교육의 변화를 만들겠습니다." />
+  <meta name="keywords" content="한상경,충남교육감,충남교육,교육감선거,기초학력,AI교육,작은학교" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== 네비게이션 ===== -->
+  <header id="site-header">
+    <nav class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-kr">한상경</span>
+        <span class="logo-sub">충남교육감 예비후보</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about">후보 소개</a></li>
+        <li><a href="#policies">핵심 공약</a></li>
+        <li><a href="#data-map">데이터 지도</a></li>
+        <li><a href="#participation">소통·참여</a></li>
+        <li><a href="#join" class="nav-cta">함께하기</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===== 히어로 ===== -->
+    <section id="hero">
+      <!--
+        [이미지 교체 안내]
+        아래 hero-bg-img의 src 속성을 후보 사진 경로로 교체하세요.
+        권장 크기: 가로 1920px × 세로 1080px 이상
+        예) src="./images/hero-photo.jpg"
+      -->
+      <div class="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=80"
+          alt="충남교육 현장"
+          class="hero-bg-img"
+          id="hero-bg-img"
+        />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content container">
+        <p class="hero-eyebrow">현장을 아는 교육감</p>
+        <h1 class="hero-title">
+          교육은 실험이 아닙니다.<br />
+          <em>결과로 증명하겠습니다.</em>
+        </h1>
+        <p class="hero-subtitle">
+          교사·교감·교장, 교육행정, 기관 운영, 청소년정책까지<br class="pc-only" />
+          두루 경험한 교육 전문가. 충남교육을 말이 아닌 성과로 바꾸겠습니다.
+        </p>
+        <div class="hero-buttons">
+          <a href="#policies" class="btn btn-primary">핵심 공약 보기</a>
+          <a href="#about" class="btn btn-outline">후보 소개 보기</a>
+        </div>
+        <div class="hero-highlights">
+          <span>학교 현장 경험</span>
+          <span>교육행정 경험</span>
+          <span>기관 운영 경험</span>
+          <span>청소년정책 경험</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 왜 한상경인가 ===== -->
+    <section id="philosophy" class="section section-cream">
+      <div class="container">
+        <p class="section-label">왜 한상경인가</p>
+        <h2 class="section-title">이념이 아니라 교육,<br />구호가 아니라 성과입니다.</h2>
+        <p class="section-desc">
+          교육감은 특정 진영의 간판이 아니라 모든 학생의 기초학력과 학교 질서를 책임지는 자리입니다.<br />
+          학교는 보여주기식 실험의 공간이 아니라, 아이들의 성장을 결과로 증명해야 하는 공간입니다.
+        </p>
+        <div class="cards-grid four-col">
+          <div class="info-card">
+            <div class="info-card-icon">📖</div>
+            <h3>기초학력 책임</h3>
+            <p>학력 회복은 선택이 아니라 기본입니다. 기초부터 차근차근 회복하는 학력안전망을 만들겠습니다.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">⚖️</div>
+            <h3>교육의 중립</h3>
+            <p>교육을 진영 논리로 재단하지 않겠습니다. 아이들 앞에서 필요한 정책으로 평가받겠습니다.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">🏫</div>
+            <h3>현장 중심 행정</h3>
+            <p>정책은 문서가 아니라 교실에서 작동해야 합니다. 학교가 교육에 집중할 수 있는 구조를 만들겠습니다.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">✅</div>
+            <h3>검증된 실행력</h3>
+            <p>말이 아닌 실행으로, 구호가 아닌 성과로 학교와 교실에서 체감되는 변화를 만들겠습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 후보 소개 ===== -->
+    <section id="about" class="section section-white">
+      <div class="container">
+        <p class="section-label">후보 소개</p>
+        <h2 class="section-title">이미 해본 사람입니다.</h2>
+
+        <div class="about-grid">
+          <div class="about-photo-wrap">
+            <!--
+              [이미지 교체 안내]
+              후보 프로필 사진으로 교체하세요.
+              권장 크기: 400×500px, 정면 촬영
+              예) src="./images/profile.jpg"
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=480&q=80"
+              alt="한상경 후보 프로필"
+              class="about-photo"
+              id="about-photo"
+            />
+            <div class="about-quote-box">
+              <blockquote>
+                "교육은 한 길로만 풀리지 않습니다. 교실과 행정, 학교와 지역이 연결될 때 아이는 성장하고 학교는 회복됩니다."
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="about-content">
+            <p class="about-intro">
+              한상경 후보는 교사로 출발해 교감과 교장, 천안교육지원청 교육국장, 충남교육청과학교육원 초대 원장, 천안시청소년재단 초대 대표이사를 지내며 현장과 행정, 기관 운영과 지역 청소년정책을 두루 경험했습니다.
+            </p>
+
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-body">
+                  <h4>학교 현장</h4>
+                  <p>교사, 교감, 교장을 거치며 아이들의 변화와 교사들의 어려움, 학부모의 걱정을 가장 가까이에서 마주했습니다.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-body">
+                  <h4>교육행정</h4>
+                  <p>천안교육지원청 교육국장으로 학교가 교육에 집중할 수 있도록 행정적 지원 구조를 고민하고 실행했습니다.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-body">
+                  <h4>기관 운영</h4>
+                  <p>충남교육청과학교육원 초대 원장으로 기관 역량을 전국 최고수준으로 끌어올렸습니다.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-body">
+                  <h4>청소년정책</h4>
+                  <p>천안시청소년재단 초대 대표이사로 학교 밖 청소년 지원 체계를 강화하며 교육의 범위를 지역으로 넓혔습니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 지금 충남교육 ===== -->
+    <section id="problem" class="section section-cream">
+      <div class="container">
+        <p class="section-label">지금 충남교육</p>
+        <h2 class="section-title">지금 필요한 것은<br />교육의 회복입니다.</h2>
+        <p class="section-desc">
+          충남교육은 기초학력 회복, 과밀학급과 작은학교 문제, 지역 간 교육격차, 교사의 업무 과중, 학교 밖 청소년 지원 등 복합적인 과제를 안고 있습니다.<br />
+          중요한 것은 누가 더 큰 구호를 외치느냐가 아니라, 누가 더 균형 있게 해결할 수 있느냐입니다.
+        </p>
+        <div class="cards-grid two-col">
+          <div class="issue-card">
+            <span class="issue-num">01</span>
+            <h3>기초학력 저하 우려</h3>
+            <p>학교문화 변화만으로는 충분하지 않습니다. 학업성취와 기초학력에서 결과를 보여줘야 합니다.</p>
+          </div>
+          <div class="issue-card">
+            <span class="issue-num">02</span>
+            <h3>지역별 격차 확대</h3>
+            <p>천안·아산의 과밀 문제와 농산어촌 작은학교 문제를 동시에 풀 수 있어야 합니다.</p>
+          </div>
+          <div class="issue-card">
+            <span class="issue-num">03</span>
+            <h3>학교의 행정 부담</h3>
+            <p>교사가 수업과 생활지도에 전념하기 어려운 구조를 바꿔야 합니다.</p>
+          </div>
+          <div class="issue-card">
+            <span class="issue-num">04</span>
+            <h3>교육의 정치화</h3>
+            <p>교육청이 정치 전선이 되면 교실이 흔들립니다. 교육은 도민 모두의 것입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7대 핵심 공약 ===== -->
+    <section id="policies" class="section section-white">
+      <div class="container">
+        <p class="section-label">핵심 공약</p>
+        <h2 class="section-title">충남교육 7대 실천과제</h2>
+        <p class="section-desc">현장 체감형 변화로 이어질 수 있는 핵심 정책을 제시합니다.<br />각 과제를 클릭하면 자세한 내용을 확인하실 수 있습니다.</p>
+
+        <div class="policies-grid" id="policiesGrid">
+          <!-- JS로 렌더링됩니다 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 비전 ===== -->
+    <section id="vision" class="section section-navy">
+      <div class="container">
+        <p class="section-label light">비전</p>
+        <h2 class="section-title light">
+          학교와 마을의 경계를 넘어,<br />
+          모든 청소년이 자신의 삶을 주도하는 충남교육
+        </h2>
+        <p class="section-desc light">
+          학교 안과 학교 밖의 이분법을 넘어서고, 지역사회와 연결된 실전형 교육,<br />
+          지자체와 교육청의 협업을 통한 안전한 교육 생태계를 만들겠습니다.
+        </p>
+        <div class="vision-points">
+          <div class="vision-point">
+            <div class="vision-icon">🔗</div>
+            <span>단절 없는 성장 지원</span>
+          </div>
+          <div class="vision-point">
+            <div class="vision-icon">🌐</div>
+            <span>지역사회 연계 미래 역량 강화</span>
+          </div>
+          <div class="vision-point">
+            <div class="vision-icon">🛡️</div>
+            <span>사각지대 없는 돌봄과 보호 체계</span>
+          </div>
+        </div>
+
+        <!--
+          [이미지 교체 안내]
+          비전 섹션 배경 또는 보조 이미지
+          예) src="./images/vision-students.jpg"
+        -->
+        <div class="vision-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1200&q=80"
+            alt="충남교육 비전"
+            class="vision-img"
+            id="vision-img"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 데이터로 보는 충남교육 지도 ===== -->
+    <section id="data-map" class="section section-cream">
+      <div class="container">
+        <p class="section-label">데이터로 보는 충남교육</p>
+        <h2 class="section-title">지역마다 다른 문제,<br />정책도 다르게 접근해야 합니다.</h2>
+        <p class="section-desc">지도에서 지역을 클릭하면 학생 수, 학교 수, 학급당 학생 수, 예산 규모와 함께<br />해당 지역에 필요한 정책 방향을 확인할 수 있습니다.</p>
+
+        <div class="map-layout">
+          <div class="map-wrap">
+            <div id="map"></div>
+            <!-- 지도 범례 -->
+            <div class="map-legend">
+              <!--
+                [지도 범례 색상 안내]
+                style.css의 :root 변수에서 지도 색상을 변경하세요.
+                --map-overfull : 과밀지역 색상
+                --map-normal   : 적정지역 색상
+                --map-decrease : 학생감소 지역 색상
+              -->
+              <div class="legend-item">
+                <span class="legend-dot overfull"></span>과밀지역
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot normal"></span>적정지역
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot decrease"></span>학생감소
+              </div>
+            </div>
+          </div>
+
+          <div class="map-panel" id="mapPanel">
+            <div class="map-panel-empty" id="mapPanelEmpty">
+              <div class="panel-empty-icon">🗺️</div>
+              <p>지도에서 지역을 클릭하면<br />상세 정보가 표시됩니다.</p>
+            </div>
+            <div class="map-panel-data" id="mapPanelData" style="display:none;">
+              <h3 id="panelTitle">—</h3>
+              <div class="panel-status-badge" id="panelStatus"></div>
+              <div class="panel-stats">
+                <div class="panel-stat">
+                  <span class="stat-label">학생 수</span>
+                  <span class="stat-value" id="panelStudents">—</span>
+                </div>
+                <div class="panel-stat">
+                  <span class="stat-label">학교 수</span>
+                  <span class="stat-value" id="panelSchools">—</span>
+                </div>
+                <div class="panel-stat">
+                  <span class="stat-label">학급당 학생</span>
+                  <span class="stat-value" id="panelPerClass">—</span>
+                </div>
+                <div class="panel-stat">
+                  <span class="stat-label">교원 수</span>
+                  <span class="stat-value" id="panelTeachers">—</span>
+                </div>
+                <div class="panel-stat full-width">
+                  <span class="stat-label">교육 예산</span>
+                  <span class="stat-value" id="panelBudget">—</span>
+                </div>
+              </div>
+              <div class="panel-policies">
+                <h4>권장 정책 방향</h4>
+                <ul id="panelPolicies"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 지역 맞춤 해법 ===== -->
+    <section id="regional-policies" class="section section-white">
+      <div class="container">
+        <p class="section-label">지역 맞춤 해법</p>
+        <h2 class="section-title">충남은 한 가지 해법으로<br />풀리지 않습니다.</h2>
+        <p class="section-desc">과밀지역과 학생 감소 지역은 전혀 다른 방식으로 접근해야 합니다.</p>
+        <div class="regional-grid">
+          <div class="regional-card overfull-card">
+            <div class="regional-card-header">
+              <span class="regional-badge">과밀지역</span>
+              <h3>과밀지역 대응</h3>
+            </div>
+            <ul>
+              <li>학급 과밀 완화 대책</li>
+              <li>학교 신설·증설 검토</li>
+              <li>학군 및 통학 여건 재조정</li>
+              <li>교사 및 지원 인력 보강</li>
+            </ul>
+          </div>
+          <div class="regional-card decrease-card">
+            <div class="regional-card-header">
+              <span class="regional-badge">학생감소 지역</span>
+              <h3>학생 감소 지역 대응</h3>
+            </div>
+            <ul>
+              <li>작은학교 특성화</li>
+              <li>통학 지원 강화</li>
+              <li>돌봄 연계 확대</li>
+              <li>AI·원격교육 활용 지원</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 현안 대응 ===== -->
+    <section id="issue-response" class="section section-cream">
+      <div class="container">
+        <p class="section-label">현안 대응</p>
+        <h2 class="section-title">불당 과밀학급 문제,<br />정쟁이 아니라 아이들의 학습권입니다.</h2>
+        <p class="section-desc">
+          어떤 안이든 공개 검증을 통과하면 추진하고, 미흡하면 보완해야 합니다.<br />
+          토지, 안전, 교통, 인가, 재원, 일정까지 주민 앞에 공개하고 검증받는 방식으로 접근하겠습니다.
+        </p>
+        <div class="issue-points">
+          <div class="issue-point-item">
+            <span class="check-icon">✓</span>
+            <span>양자택일식 정치 프레임 거부</span>
+          </div>
+          <div class="issue-point-item">
+            <span class="check-icon">✓</span>
+            <span>공개 검증과 공개 토론 제안</span>
+          </div>
+          <div class="issue-point-item">
+            <span class="check-icon">✓</span>
+            <span>단기 과밀 완화책 병행</span>
+          </div>
+          <div class="issue-point-item">
+            <span class="check-icon">✓</span>
+            <span>아이 기준의 실질 해법 우선</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 소통·참여 ===== -->
+    <section id="participation" class="section section-white">
+      <div class="container">
+        <p class="section-label">소통·참여</p>
+        <h2 class="section-title">교육은 함께 만들어야 합니다.</h2>
+        <p class="section-desc">
+          충남의 교육은 도민의 목소리 위에서 설계되어야 합니다.<br />
+          지역 현안, 공약 제안, 교육 현장의 목소리를 보내주십시오.
+        </p>
+        <div class="participation-buttons">
+          <a href="/contact/opinion" class="btn btn-secondary">의견 보내기</a>
+          <a href="/contact/policy" class="btn btn-secondary">공약 제안하기</a>
+          <a href="/contact/join" class="btn btn-secondary">캠프 참여 신청</a>
+        </div>
+
+        <!-- 참여 폼 -->
+        <div class="contact-form-wrap">
+          <h3>목소리를 들려주세요</h3>
+          <form id="participationForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="formName">성함</label>
+                <input type="text" id="formName" name="name" placeholder="홍길동" required />
+              </div>
+              <div class="form-group">
+                <label for="formRegion">거주 지역</label>
+                <select id="formRegion" name="region" required>
+                  <option value="">선택해주세요</option>
+                  <option>천안시</option><option>아산시</option><option>공주시</option>
+                  <option>보령시</option><option>서산시</option><option>논산시</option>
+                  <option>계룡시</option><option>당진시</option><option>금산군</option>
+                  <option>부여군</option><option>서천군</option><option>청양군</option>
+                  <option>홍성군</option><option>예산군</option><option>태안군</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="formMessage">충남교육에 바라는 점</label>
+              <textarea id="formMessage" name="message" rows="4" placeholder="자유롭게 의견을 작성해주세요."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="formContact">연락처 (선택)</label>
+              <input type="tel" id="formContact" name="contact" placeholder="010-0000-0000" />
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">의견 보내기</button>
+            <div class="form-success" id="formSuccess">✓ 소중한 의견 감사합니다. 충남교육의 변화를 함께 만들어갑시다.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 최종 CTA ===== -->
+    <section id="join" class="section section-yellow">
+      <div class="container text-center">
+        <p class="section-label">함께하기</p>
+        <h2 class="section-title dark">
+          특정 조직의 선택이 아니라,<br />
+          충남도민의 선택을 받겠습니다.
+        </h2>
+        <p class="section-desc dark">
+          교육은 정치가 아닙니다. 교육은 아이들을 위한 것입니다.<br />
+          충남교육의 변화를 함께 만들어주십시오.
+        </p>
+        <div class="cta-buttons">
+          <a href="/support" class="btn btn-navy">지지와 응원 보내기</a>
+          <a href="/newsletter" class="btn btn-outline-dark">소식 받아보기</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 푸터 ===== -->
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="footer-name">한상경 충남교육감 예비후보</p>
+          <p class="footer-slogan">말이 아닌 성과로 증명하겠습니다.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="#about">후보 소개</a>
+          <a href="#policies">핵심 공약</a>
+          <a href="#data-map">데이터 지도</a>
+          <a href="#participation">소통·참여</a>
+        </nav>
+        <div class="footer-social">
+          <a href="#" title="Facebook" aria-label="Facebook">📘</a>
+          <a href="#" title="Instagram" aria-label="Instagram">📷</a>
+          <a href="#" title="YouTube" aria-label="YouTube">📺</a>
+          <a href="#" title="KakaoTalk" aria-label="KakaoTalk">💬</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 한상경 선거캠프. All rights reserved.</p>
+        <p class="footer-notice">본 페이지의 정책 및 문구는 공개 발언과 제공 자료를 바탕으로 정리되었습니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== 7대 공약 팝업 모달 ===== -->
+  <div class="modal-overlay" id="policyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="닫기">✕</button>
+      <div class="modal-header">
+        <span class="modal-number" id="modalNumber"></span>
+        <span class="modal-tag" id="modalTag"></span>
+      </div>
+      <div class="modal-icon" id="modalIcon"></div>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-desc" id="modalDesc"></p>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>
