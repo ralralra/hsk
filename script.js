@@ -261,7 +261,7 @@ function initMap() {
   const map = L.map("map", {
     zoomControl: true,
     scrollWheelZoom: false, // 스크롤 휠 줌 비활성 (페이지 스크롤과 충돌 방지)
-  }).setView([36.5, 126.8], 9);
+  }).setView([36.5, 126.8], 7);
 
   /*
    * [타일 레이어 안내]
@@ -269,10 +269,11 @@ function initMap() {
    * 현재: CartoDB Light (밝고 깔끔한 스타일)
    * 대안1 - 기본: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
    * 대안2 - 어두운: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-   * 대안3 - 중간톤: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+   * 대안3 - 밝은톤 : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+   * 대안4 - 중간톤: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
    */
   L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
     {
       attribution: "© OpenStreetMap © CartoDB",
       maxZoom: 18,
@@ -321,7 +322,7 @@ function initMap() {
              * weight    : 경계선 두께 (px)
              */
             fillColor: mapColor(status),
-            fillOpacity: 0.75,
+            fillOpacity: 0.6,
             color: "#ffffff",
             weight: 1.5,
           };
@@ -353,7 +354,7 @@ function initMap() {
 
             // 클릭된 지역 강조
             layer.resetStyle();
-            l.setStyle({ fillOpacity: 1, weight: 3, color: "#1E3A8A" });
+            l.setStyle({ fillOpacity: 1, weight: 3, color: "#ffffff" });
           });
         },
       }).addTo(map);
@@ -507,7 +508,7 @@ function initForm() {
      * 예) const FORM_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
      * URL이 없으면 로컬 처리로 대체됩니다.
      */
-    const FORM_URL = "https://script.google.com/macros/s/AKfycbwXxb1ZBoHvNOHLwxQ5PHxHtBsjjb8tQ5vlKT7UYF8rpTpWauW6oE7NoApXca1evRDEQw/exec"; // ← Google Apps Script URL 입력
+    const FORM_URL = 'https://script.google.com/macros/s/AKfycbwXxb1ZBoHvNOHLwxQ5PHxHtBsjjb8tQ5vlKT7UYF8rpTpWauW6oE7NoApXca1evRDEQw/exec'; // ← Google Apps Script URL 입력
 
     const data = Object.fromEntries(new FormData(form).entries());
     data.timestamp = new Date().toLocaleString("ko-KR");

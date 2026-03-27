@@ -155,28 +155,28 @@
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-body">
-                  <h4>학교 현장</h4>
+                  <h3>학교 현장</h3>
                   <p>교사, 교감, 교장을 거치며 아이들의 변화와 교사들의 어려움, 학부모의 걱정을 가장 가까이에서 마주했습니다.</p>
                 </div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-body">
-                  <h4>교육행정</h4>
+                  <h3>교육행정</h3>
                   <p>천안교육지원청 교육국장으로 학교가 교육에 집중할 수 있도록 행정적 지원 구조를 고민하고 실행했습니다.</p>
                 </div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-body">
-                  <h4>기관 운영</h4>
+                  <h3>기관 운영</h3>
                   <p>충남교육청과학교육원 초대 원장으로 기관 역량을 전국 최고수준으로 끌어올렸습니다.</p>
                 </div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-body">
-                  <h4>청소년정책</h4>
+                  <h3>청소년정책</h3>
                   <p>천안시청소년재단 초대 대표이사로 학교 밖 청소년 지원 체계를 강화하며 교육의 범위를 지역으로 넓혔습니다.</p>
                 </div>
               </div>
@@ -198,22 +198,22 @@
         <div class="cards-grid two-col">
           <div class="issue-card">
             <span class="issue-num">01</span>
-            <h3>기초학력 저하 우려</h3>
+            <h3><b>기초학력 저하 우려</b></h3>
             <p>학교문화 변화만으로는 충분하지 않습니다. 학업성취와 기초학력에서 결과를 보여줘야 합니다.</p>
           </div>
           <div class="issue-card">
             <span class="issue-num">02</span>
-            <h3>지역별 격차 확대</h3>
+            <h3><b>지역별 격차 확대</b></h3>
             <p>천안·아산의 과밀 문제와 농산어촌 작은학교 문제를 동시에 풀 수 있어야 합니다.</p>
           </div>
           <div class="issue-card">
             <span class="issue-num">03</span>
-            <h3>학교의 행정 부담</h3>
+            <h3><b>학교의 행정 부담</b></h3>
             <p>교사가 수업과 생활지도에 전념하기 어려운 구조를 바꿔야 합니다.</p>
           </div>
           <div class="issue-card">
             <span class="issue-num">04</span>
-            <h3>교육의 정치화</h3>
+            <h3><b>교육의 정치화</b></h3>
             <p>교육청이 정치 전선이 되면 교실이 흔들립니다. 교육은 도민 모두의 것입니다.</p>
           </div>
         </div>
@@ -424,38 +424,120 @@
         <div class="participation-buttons">
           <a href="/contact/opinion" class="btn btn-secondary">의견 보내기</a>
           <a href="/contact/policy" class="btn btn-secondary">공약 제안하기</a>
-          <a href="/contact/join" class="btn btn-secondary">캠프 참여 신청</a>
+          <!--  <a href="/contact/join" class="btn btn-secondary">캠프 참여 신청</a>  -->
         </div>
 
         <!-- 참여 폼 -->
         <div class="contact-form-wrap">
           <h3>목소리를 들려주세요</h3>
+          <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: #555;">
+            충남교육의 미래를 위한 여러분의 소중한 의견을 기다립니다
+          </p>
+
           <form id="participationForm" class="contact-form">
             <div class="form-row">
+              <div class="form-group">
+
+                <label for="age">개인정보 수집동의 (필수)*</label>
+                <select id="age" name="age" required>
+                    <option value="">수집된 정보는 선거 종료 후 3개월간 보관 후 파기됩니다. 개인정보 수집 및 이용에 동의합니다. </option>
+                    <option value="네">네</option>
+                    <option value="아니요">아니오</option>
+
+                </select>
               <div class="form-group">
                 <label for="formName">성함</label>
                 <input type="text" id="formName" name="name" placeholder="홍길동" required />
               </div>
+
               <div class="form-group">
-                <label for="formRegion">거주 지역</label>
-                <select id="formRegion" name="region" required>
-                  <option value="">선택해주세요</option>
-                  <option>천안시</option><option>아산시</option><option>공주시</option>
-                  <option>보령시</option><option>서산시</option><option>논산시</option>
-                  <option>계룡시</option><option>당진시</option><option>금산군</option>
-                  <option>부여군</option><option>서천군</option><option>청양군</option>
-                  <option>홍성군</option><option>예산군</option><option>태안군</option>
+                <label for="age">연령대 *</label>
+                <select id="age" name="age" required>
+                    <option value="">선택해주세요</option>
+                    <option value="20대">20대</option>
+                    <option value="30대">30대</option>
+                    <option value="40대">40대</option>
+                    <option value="50대">50대</option>
+                    <option value="60대 이상">60대 이상</option>
+                </select>
+            </div>
+
+
+              <div class="form-group">
+                 <label for="region">거주 지역 *</label>
+                <select id="region" name="region" required>
+                    <option value="">선택해주세요</option>
+                    <option value="천안시">천안시</option>
+                    <option value="아산시">아산시</option>
+                    <option value="홍성군">홍성군</option>
+                    <option value="보령시">보령시</option>
+                    <option value="서산시">서산시</option>
+                    <option value="당진시">당진시</option>
+                    <option value="공주시">공주시</option>
+                    <option value="논산시">논산시</option>
+                    <option value="계룡시">계룡시</option>
+                    <option value="금산군">금산군</option>
+                    <option value="부여군">부여군</option>
+                    <option value="서천군">서천군</option>
+                    <option value="청양군">청양군</option>
+                    <option value="예산군">예산군</option>
+                    <option value="태안군">태안군</option>
                 </select>
               </div>
+            
+
+            <div class="form-group">
+                <label>충남교육에서 가장 시급한 문제는? *</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="urgent_issues" value="사교육비 부담"> 사교육비 부담</label>
+                    <label><input type="checkbox" name="urgent_issues" value="학력격차"> 학력격차</label>
+                    <label><input type="checkbox" name="urgent_issues" value="교권 추락"> 교권 추락</label>
+                    <label><input type="checkbox" name="urgent_issues" value="학교폭력"> 학교폭력</label><p>
+                    <label><input type="checkbox" name="urgent_issues" value="농어촌 교육 환경"> 농어촌 교육 환경</label>
+                    <label><input type="checkbox" name="urgent_issues" value="특수교육 부족"> 특수교육 부족</label>
+                    <label><input type="checkbox" name="urgent_issues" value="진로교육 부족"> 진로교육 부족</label>
+                    <label><input type="checkbox" name="urgent_issues" value="기타"> 기타</label></p>
+                </div>
             </div>
+
+            <div class="form-group">
+                <label>한상경 후보의 7대 공약 중 가장 중요하다고 생각하시는 것은? *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="important_promise" value="학력안전망" required> 충남 학력안전망 구축</label>
+                    <label><input type="radio" name="important_promise" value="통합교육"> 통합·포용교육 강화</label>
+                    <label><input type="radio" name="important_promise" value="AI과학교육"> AI·과학 기반 미래교육</label>
+                    <label><input type="radio" name="important_promise" value="작은학교"> 농어촌 작은학교 살리기</label><p></p>
+                    <label><input type="radio" name="important_promise" value="학교밖교육"> 학교 밖 교육 혁신 확대</label>
+                    <label><input type="radio" name="important_promise" value="교사지원"> 교사·관리자 혁신지원</label>
+                    <label><input type="radio" name="important_promise" value="투명행정"> 정직하고 투명한 교육청</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="support">한상경 후보를 지지하십니까? *</label>
+                <select id="support" name="support" required>
+                    <option value="">선택해주세요</option>
+                    <option value="적극 지지">적극 지지</option>
+                    <option value="지지">지지</option>
+                    <option value="보통">보통</option>
+                    <option value="반대">반대</option>
+                    <option value="잘 모르겠음">잘 모르겠음</option>
+                </select>
+            </div>
+
+
             <div class="form-group">
               <label for="formMessage">충남교육에 바라는 점</label>
               <textarea id="formMessage" name="message" rows="4" placeholder="자유롭게 의견을 작성해주세요."></textarea>
             </div>
+
+
             <div class="form-group">
               <label for="formContact">연락처 (선택)</label>
               <input type="tel" id="formContact" name="contact" placeholder="010-0000-0000" />
             </div>
+
+
             <button type="submit" class="btn btn-primary form-submit">의견 보내기</button>
             <div class="form-success" id="formSuccess">✓ 소중한 의견 감사합니다. 충남교육의 변화를 함께 만들어갑시다.</div>
           </form>
@@ -468,17 +550,13 @@
       <div class="container text-center">
         <p class="section-label">함께하기</p>
         <h2 class="section-title dark">
-          특정 조직의 선택이 아니라,<br />
-          충남도민의 선택을 받겠습니다.
+          말이 아닌 실행으로, 성과로 증명하겠습니다<br>충남교육의 변화를 함께 만들어갑시다.
         </h2>
-        <p class="section-desc dark">
-          교육은 정치가 아닙니다. 교육은 아이들을 위한 것입니다.<br />
-          충남교육의 변화를 함께 만들어주십시오.
-        </p>
-        <div class="cta-buttons">
+     
+        <!-- <div class="cta-buttons">
           <a href="/support" class="btn btn-navy">지지와 응원 보내기</a>
           <a href="/newsletter" class="btn btn-outline-dark">소식 받아보기</a>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -499,15 +577,15 @@
           <a href="#participation">소통·참여</a>
         </nav>
         <div class="footer-social">
-          <a href="#" title="Facebook" aria-label="Facebook">📘</a>
-          <a href="#" title="Instagram" aria-label="Instagram">📷</a>
-          <a href="#" title="YouTube" aria-label="YouTube">📺</a>
-          <a href="#" title="KakaoTalk" aria-label="KakaoTalk">💬</a>
+          <a href="https://www.facebook.com/hansang.gyeong.364692" title="Facebook" aria-label="Facebook">📘</a>
+          <a href="https://www.instagram.com/hansanggyeong63/" title="Instagram" aria-label="Instagram">📷</a>
+          <a href="#data-map" title="YouTube" aria-label="YouTube">📺</a>
+          <a href="#participation" title="KakaoTalk" aria-label="KakaoTalk">💬</a>
         </div>
       </div>
       <div class="footer-bottom">
         <p>© 2026 한상경 선거캠프. All rights reserved.</p>
-        <p class="footer-notice">본 페이지의 정책 및 문구는 공개 발언과 제공 자료를 바탕으로 정리되었습니다.</p>
+        <p class="footer-notice">본 페이지의 정책 및 문구는 후보의 공약을 바탕으로 정리되었습니다.</p>
       </div>
     </div>
   </footer>

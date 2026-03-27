@@ -113,7 +113,7 @@ ul { list-style: none; }
 .section-label {
   display: inline-block;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -131,7 +131,7 @@ ul { list-style: none; }
 /* 섹션 제목 */
 .section-title {
   font-family: 'Noto Serif KR', serif;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-size: clamp(2.4rem, 3.2vw, 2.4rem);
   font-weight: 700;
   line-height: 1.35;
   color: var(--color-navy);
@@ -667,7 +667,7 @@ ul { list-style: none; }
 }
 .policy-title {
   font-family: 'Noto Serif KR', serif;
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-navy);
   line-height: 1.45;
@@ -769,7 +769,7 @@ ul { list-style: none; }
   margin-bottom: 12px;
 }
 .modal-title {
-  font-family: 'Noto Serif KR', serif;
+  font-family: 'Noto Serif KR', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--color-navy);
