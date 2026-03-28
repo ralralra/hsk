@@ -81,48 +81,63 @@ const POLICIES = [
 
 /* ============================================================
    2. 지도 데이터
+   ─────────────────────────────────────────────────────────────
+   [데이터 출처]
+   ① 충청남도교육청·KESS·지방교육재정알리미 (학생수, 학교수, avgPerClass)
+   ② 시·군 교육경비 보조금 현황 2025 (muniSubsidy, muniRank, muniTotal)
+      → 시·군이 지역 학생 1인당 추가 지원하는 금액
+   ─────────────────────────────────────────────────────────────
+   student    : 학생수 (명)
+   school     : 학교수 (개)
+   avgPerClass: 학급당 평균 학생수 (명)
+   muniSubsidy: 시·군 학생 1인당 교육경비 보조금 (원)  ← 지도 색상 기준
+   muniRank   : 충남 내 순위 (1위=최고, 15위=최저)
+   muniTotal  : 시·군 총 교육경비 보조금 (원)
    ============================================================ */
 const MAP_DATA = [
-  { name: "천안시 동남구", student: 30500, school: 78,  classCount: 1280, teacher: 1820, budget: 21000000000 },
-  { name: "천안시 서북구", student: 48200, school: 96,  classCount: 1910, teacher: 2640, budget: 33500000000 },
-  { name: "아산시",        student: 45100, school: 92,  classCount: 1730, teacher: 2510, budget: 30100000000 },
-  { name: "공주시",        student: 11200, school: 49,  classCount:  510, teacher:  760, budget: 11800000000 },
-  { name: "보령시",        student:  8900, school: 45,  classCount:  430, teacher:  690, budget: 10900000000 },
-  { name: "서산시",        student: 16800, school: 58,  classCount:  730, teacher: 1110, budget: 15300000000 },
-  { name: "논산시",        student: 10300, school: 47,  classCount:  470, teacher:  760, budget: 11200000000 },
-  { name: "계룡시",        student:  6300, school: 19,  classCount:  260, teacher:  360, budget:  5200000000 },
-  { name: "당진시",        student: 18700, school: 62,  classCount:  810, teacher: 1170, budget: 14900000000 },
-  { name: "금산군",        student:  4200, school: 28,  classCount:  220, teacher:  360, budget:  4900000000 },
-  { name: "부여군",        student:  5200, school: 34,  classCount:  250, teacher:  420, budget:  6100000000 },
-  { name: "서천군",        student:  4100, school: 29,  classCount:  210, teacher:  340, budget:  4800000000 },
-  { name: "청양군",        student:  2500, school: 22,  classCount:  140, teacher:  230, budget:  3700000000 },
-  { name: "홍성군",        student:  9900, school: 42,  classCount:  430, teacher:  710, budget: 10100000000 },
-  { name: "예산군",        student:  6900, school: 35,  classCount:  310, teacher:  540, budget:  7600000000 },
-  { name: "태안군",        student:  4700, school: 31,  classCount:  230, teacher:  390, budget:  5800000000 },
+  { name: "천안시 동남구", student: 42000, school:  89, avgPerClass: 24.2, muniSubsidy:   74147, muniRank: 15, muniTotal:  6345675000 },
+  { name: "천안시 서북구", student: 38000, school:  78, avgPerClass: 24.7, muniSubsidy:   74147, muniRank: 15, muniTotal:  6345675000 },
+  { name: "아산시",        student: 52831, school:  87, avgPerClass: 23.2, muniSubsidy:  429314, muniRank:  6, muniTotal: 22681077000 },
+  { name: "공주시",        student: 18500, school:  58, avgPerClass: 19.8, muniSubsidy:  528336, muniRank:  4, muniTotal:  4934654000 },
+  { name: "보령시",        student: 13200, school:  52, avgPerClass: 18.5, muniSubsidy:  559847, muniRank:  3, muniTotal:  4425028000 },
+  { name: "서산시",        student: 21800, school:  68, avgPerClass: 21.3, muniSubsidy:  243486, muniRank:  9, muniTotal:  4925480000 },
+  { name: "논산시",        student: 15600, school:  62, avgPerClass: 19.2, muniSubsidy:  264654, muniRank:  7, muniTotal:  2879174000 },
+  { name: "계룡시",        student:  5800, school:  18, avgPerClass: 22.1, muniSubsidy:  176395, muniRank: 12, muniTotal:  1120812000 },
+  { name: "당진시",        student: 23400, school:  72, avgPerClass: 21.9, muniSubsidy:  237856, muniRank: 10, muniTotal:  5022821000 },
+  { name: "금산군",        student:  6900, school:  34, avgPerClass: 14.8, muniSubsidy:  600108, muniRank:  2, muniTotal:  2169390000 },
+  { name: "부여군",        student:  9200, school:  45, avgPerClass: 15.6, muniSubsidy:  225750, muniRank: 11, muniTotal:   905032000 },
+  { name: "서천군",        student:  7500, school:  38, avgPerClass: 14.2, muniSubsidy:  258259, muniRank:  8, muniTotal:   873172000 },
+  { name: "청양군",        student:  5100, school:  28, avgPerClass: 12.8, muniSubsidy: 1108933, muniRank:  1, muniTotal:  2004950000 },
+  { name: "홍성군",        student: 13500, school:  54, avgPerClass: 17.9, muniSubsidy:  110506, muniRank: 14, muniTotal:  1294800000 },
+  { name: "예산군",        student: 11200, school:  48, avgPerClass: 16.5, muniSubsidy:  148430, muniRank: 13, muniTotal:  1149000000 },
+  { name: "태안군",        student:  8900, school:  42, avgPerClass: 15.8, muniSubsidy:  446510, muniRank:  5, muniTotal:  1772200000 },
 ];
 
-/* 강제 과밀 지역 (공식 지정) */
-const FORCE_OVERFULL = new Set(["천안시동남구", "천안시서북구", "아산시"]);
+/* 충남 15개 시·군 평균 학생 1인당 지원금 (원) */
+const MUNI_AVG = 360835;
+/* 최고값 (청양군) */
+const MUNI_MAX = 1108933;
 
-/* 지역별 권장 정책 */
+/* 지역별 권장 정책
+   muniSubsidy 구간별로 달리 표시 */
 const REGION_POLICIES = {
-  overfull: [
-    "학급 과밀 완화 긴급 대책 시행",
-    "학교 신설·증설 조기 추진 검토",
-    "학군 및 통학 여건 재조정",
-    "교사 및 지원 인력 보강",
+  high: [   /* 50만원 이상 */
+    "높은 1인당 지원을 학교 경쟁력으로 연결",
+    "작은학교 특성화 교육과정 강화",
+    "지역-학교 연계 프로그램 확대",
+    "지원 효율성 모니터링 체계 구축",
   ],
-  normal: [
-    "현행 교육 환경 질적 개선",
-    "교사 역량 강화 프로그램 운영",
-    "교육과정 다양화 지원",
-    "학생 맞춤형 진로 지원 확대",
+  mid: [    /* 20~50만원 */
+    "교육재정 배분 개선으로 격차 완화",
+    "지역 특성 맞춤 교육 투자 확대",
+    "학교-지자체 협력 강화",
+    "학생 1인당 지원 수준 단계적 향상",
   ],
-  decrease: [
-    "작은학교 특성화 교육과정 운영",
-    "통학 지원 및 돌봄 연계 확대",
-    "AI·원격교육 활용 수업 지원",
-    "지역 연계 교육 프로그램 확대",
+  low: [    /* 20만원 미만 */
+    "지역 내 교육투자 대폭 확대 필요",
+    "도시 집중 과밀 해소와 재정 형평성 동시 추진",
+    "교육청-지자체 협력 예산 신설",
+    "균형 교육재정 배분 체계 전면 개선",
   ],
 };
 
@@ -134,33 +149,48 @@ function normalize(s) {
 }
 
 function calcStatus(d) {
-  if (FORCE_OVERFULL.has(normalize(d.name))) return "overfull";
-  const ratio = d.student / d.classCount;
-  if (ratio >= 28) return "overfull";
-  if (ratio <= 20) return "decrease";
-  return "normal";
+  /*
+   * [지도 색상 기준] 시·군 학생 1인당 교육경비 보조금
+   * ─────────────────────────────────────────────
+   * high : 500,000원 이상  → 민트   (충남 1~4위권)
+   * mid  : 200,000~499,999원 → 라이트그린 (충남 5~11위권)
+   * low  : 200,000원 미만  → 옐로우 (충남 12~15위 — 주목 필요)
+   * ─────────────────────────────────────────────
+   * ※ 수치 기준을 바꾸려면 아래 숫자를 수정하세요.
+   */
+  if (d.muniSubsidy >= 500000) return "high";
+  if (d.muniSubsidy >= 200000) return "mid";
+  return "low";
 }
 
 function statusLabel(status) {
-  return { overfull: "과밀지역", normal: "적정지역", decrease: "학생감소 지역" }[status];
+  return {
+    high: "지원 상위",
+    mid:  "지원 중위",
+    low:  "지원 하위 ⚠",
+  }[status] || "";
 }
 
 function mapColor(status) {
   /*
-   * 지도 폴리곤 색상
-   * style.css의 :root 변수와 일치시키려면 아래 값을 같이 변경하세요.
-   * ──────────────────────────────────────
-   * 과밀지역  ← getComputedStyle 읽기
-   * 적정지역  ← getComputedStyle 읽기
-   * 학생감소  ← getComputedStyle 읽기
+   * [지도 색상 변경 안내]
+   * style.css :root 의 --map-high / --map-mid / --map-low 를 수정하세요.
    */
   const root = getComputedStyle(document.documentElement);
-  const colors = {
-    overfull: root.getPropertyValue("--map-overfull").trim() || "#E05555",
-    normal:   root.getPropertyValue("--map-normal").trim()   || "#E8A020",
-    decrease: root.getPropertyValue("--map-decrease").trim() || "#4A7FD4",
-  };
-  return colors[status] || "#999";
+  return {
+    high: root.getPropertyValue("--map-high").trim() || "#A8E1C2",
+    mid:  root.getPropertyValue("--map-mid").trim()  || "#CBE0A0",
+    low:  root.getPropertyValue("--map-low").trim()  || "#E1DB00",
+  }[status] || "#DBDDBA";
+}
+
+/* 격차 비율: 충남 평균 대비 퍼센트 */
+function gapVsAvg(muniSubsidy) {
+  return Math.round((muniSubsidy / MUNI_AVG) * 100);
+}
+/* 막대 너비: 최고값 대비 퍼센트 */
+function barWidth(muniSubsidy) {
+  return Math.min(100, Math.round((muniSubsidy / MUNI_MAX) * 100));
 }
 
 function formatNumber(n) {
@@ -333,10 +363,19 @@ function initMap() {
           if (!d) return;
 
           const status = calcStatus(d);
+          const gap    = gapVsAvg(d.muniSubsidy);
+          const gapTxt = gap >= 100
+            ? `<span style="color:#1A5C3A">평균의 ${gap}%</span>`
+            : `<span style="color:#5A4500">평균의 ${gap}% ▼</span>`;
 
           // 툴팁 (hover 시 표시)
           l.bindTooltip(
-            `<strong>${d.name}</strong><br><span style="color:${mapColor(status)}">${statusLabel(status)}</span>`,
+            `<div style="font-family:'Noto Sans KR',sans-serif;min-width:160px;line-height:1.7">
+              <strong style="font-size:0.92rem">${d.name}</strong><br/>
+              <span style="font-size:0.8rem;color:#555">시·군 학생 1인당 지원금</span><br/>
+              <strong style="font-size:1rem;color:#1E3A8A">${formatNumber(d.muniSubsidy)}원</strong><br/>
+              <span style="font-size:0.78rem">충남 ${d.muniRank}위 / 15위 &nbsp;·&nbsp; ${gapTxt}</span>
+            </div>`,
             { sticky: true, className: "map-tooltip" }
           );
 
@@ -377,23 +416,61 @@ function initMap() {
 function updateMapPanel(d, status) {
   const emptyEl = document.getElementById("mapPanelEmpty");
   const dataEl  = document.getElementById("mapPanelData");
-
   if (!emptyEl || !dataEl) return;
 
-  // 값 채우기
+  /* ── 제목 & 상태 뱃지 ── */
   document.getElementById("panelTitle").textContent = d.name;
 
   const statusBadge = document.getElementById("panelStatus");
   statusBadge.textContent = statusLabel(status);
-  statusBadge.className = `panel-status-badge ${status}`;
+  statusBadge.className   = `panel-status-badge ${status}`;
 
-  document.getElementById("panelStudents").textContent = `${formatNumber(d.student)}명`;
-  document.getElementById("panelSchools").textContent  = `${d.school}개교`;
-  document.getElementById("panelPerClass").textContent = `${(d.student / d.classCount).toFixed(1)}명`;
-  document.getElementById("panelTeachers").textContent = `${formatNumber(d.teacher)}명`;
-  document.getElementById("panelBudget").textContent   = formatBudget(d.budget);
+  /* ── 핵심 수치 ── */
+  document.getElementById("panelStudents").textContent  = `${formatNumber(d.student)}명`;
+  document.getElementById("panelSchools").textContent   = `${d.school}개교`;
+  document.getElementById("panelPerClass").textContent  = `${d.avgPerClass.toFixed(1)}명`;
 
-  // 권장 정책 목록
+  /* ── 시·군 지원금 영역 ── */
+  document.getElementById("panelMuniAmount").textContent = `${formatNumber(d.muniSubsidy)}원`;
+
+  /* 순위 뱃지 색상 */
+  const rankEl = document.getElementById("panelMuniRank");
+  rankEl.textContent = `충남 ${d.muniRank}위 / 15위`;
+  rankEl.className   = `muni-rank-badge rank-${status}`;
+
+  /* 평균 대비 퍼센트 */
+  const gap    = gapVsAvg(d.muniSubsidy);
+  const gapEl  = document.getElementById("panelMuniGap");
+  const arrow  = gap >= 100 ? "▲" : "▼";
+  const gapCls = gap >= 100 ? "gap-positive" : "gap-negative";
+  gapEl.innerHTML = `<span class="${gapCls}">${arrow} 충남 평균의 ${gap}%</span>
+    <small>(평균 ${formatNumber(MUNI_AVG)}원)</small>`;
+
+  /* 비교 막대 */
+  const barEl  = document.getElementById("panelMuniBar");
+  const barFill = document.getElementById("panelMuniBarFill");
+  const w      = barWidth(d.muniSubsidy);
+  barFill.style.width = w + "%";
+  barFill.className   = `bar-fill bar-${status}`;
+  document.getElementById("panelMuniBarMax").textContent =
+    `최고 ${formatNumber(MUNI_MAX)}원 (청양군)`;
+
+  /* 격차 메시지 */
+  const msgEl = document.getElementById("panelMuniMsg");
+  if (status === "low") {
+    const times = (MUNI_MAX / d.muniSubsidy).toFixed(1);
+    msgEl.innerHTML =
+      `<span class="msg-warn">⚠ 최고 지역(청양군)의 <strong>${Math.round(100 * d.muniSubsidy / MUNI_MAX)}%</strong> 수준입니다.<br/>` +
+      `청양군보다 <strong>${times}배</strong> 적게 받고 있습니다.</span>`;
+  } else if (status === "mid") {
+    msgEl.innerHTML =
+      `<span class="msg-mid">학생 1인당 지원이 충남 평균 수준입니다.<br/>격차 해소를 위한 추가 노력이 필요합니다.</span>`;
+  } else {
+    msgEl.innerHTML =
+      `<span class="msg-good">학생 1인당 지원이 충남 상위권입니다.<br/>지원이 실제 교육 성과로 이어지는지 점검이 필요합니다.</span>`;
+  }
+
+  /* ── 권장 정책 ── */
   const policiesList = document.getElementById("panelPolicies");
   policiesList.innerHTML = "";
   REGION_POLICIES[status].forEach((policy) => {
@@ -402,15 +479,15 @@ function updateMapPanel(d, status) {
     policiesList.appendChild(li);
   });
 
-  // 전환 애니메이션
-  emptyEl.style.display = "none";
-  dataEl.style.display  = "block";
-  dataEl.style.opacity  = "0";
+  /* ── 전환 애니메이션 ── */
+  emptyEl.style.display  = "none";
+  dataEl.style.display   = "block";
+  dataEl.style.opacity   = "0";
   dataEl.style.transform = "translateY(8px)";
   requestAnimationFrame(() => {
     dataEl.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-    dataEl.style.opacity  = "1";
-    dataEl.style.transform = "translateY(0)";
+    dataEl.style.opacity    = "1";
+    dataEl.style.transform  = "translateY(0)";
   });
 }
 

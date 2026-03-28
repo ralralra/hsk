@@ -46,11 +46,15 @@
   --transition:   0.25s cubic-bezier(.4,0,.2,1);
 
   /* ============================================================
-     지도 색상 설정 ← 여기서만 변경하면 지도 전체에 반영됩니다
+     지도 색상 설정 ← 시·군 학생 1인당 지원금 기준
+     ─────────────────────────────────────────────────────────────
+     --map-high : 500,000원 이상  (지원 상위, 민트)
+     --map-mid  : 200,000~499,999원 (지원 중위, 라이트그린)
+     --map-low  : 200,000원 미만  (지원 하위, 옐로우 — 주목)
      ============================================================ */
-  --map-overfull: #E05555;   /* 과밀지역  ← 빨간 계열로 변경 가능  예) #C0392B */
-  --map-normal:   #E8A020;   /* 적정지역  ← 주황·노란 계열로 변경  예) #F39C12 */
-  --map-decrease: #4A7FD4;   /* 학생감소  ← 파란 계열로 변경 가능  예) #2980B9 */
+  --map-high:    #A8E1C2;   /* 지원 상위 (민트)       예) #8ED4AF */
+  --map-mid:     #CBE0A0;   /* 지원 중위 (라이트그린)  예) #B8D68A */
+  --map-low:     #E1DB00;   /* 지원 하위 (옐로우)     예) #D4CE00 */
   /* ─────────────────────────────────────────────────────────── */
 }
 
@@ -144,8 +148,8 @@ ul { list-style: none; }
 .section-desc {
   font-size: 1rem;
   color: var(--text-mid);
-  max-width: 680px;
-  margin: 0 auto 40px;
+  max-width: 780px;
+  margin: 0 auto 20px;
   line-height: 1.8;
 }
 .section-desc.light { color: rgba(255,255,255,0.85); }
@@ -874,9 +878,9 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 /* 범례 색상은 --map-* 변수와 동기화됩니다 */
-.legend-dot.overfull  { background: var(--map-overfull); }
-.legend-dot.normal    { background: var(--map-normal); }
-.legend-dot.decrease  { background: var(--map-decrease); }
+.legend-dot.high     { background: var(--map-high); }
+.legend-dot.mid      { background: var(--map-mid); }
+.legend-dot.low      { background: var(--map-low); border: 1px solid #B8AC00; }
 
 /* 지역 정보 패널 */
 .map-panel {
@@ -918,9 +922,9 @@ ul { list-style: none; }
   border-radius: var(--radius-pill);
   margin-bottom: 20px;
 }
-.panel-status-badge.overfull  { background: #fde8e8; color: #c53030; }
-.panel-status-badge.normal    { background: #fef3c7; color: #92400e; }
-.panel-status-badge.decrease  { background: #dbeafe; color: #1e40af; }
+.panel-status-badge.high     { background: #D4F2E4; color: #1A5C3A; }   /* 지원 상위 */
+.panel-status-badge.mid      { background: #EAF4D0; color: #3A5020; }   /* 지원 중위 */
+.panel-status-badge.low      { background: #FEFBC0; color: #5A4500; }   /* 지원 하위 */
 
 .panel-stats {
   display: grid;
@@ -976,6 +980,93 @@ ul { list-style: none; }
   color: var(--color-navy);
   font-size: 0.8rem;
 }
+
+/* ── 시·군 지원금 블록 ─────────────────────────────────────── */
+.panel-muni-block {
+  background: var(--bg-cream);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--color-navy);
+}
+.panel-muni-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.panel-muni-amount {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+/* 순위 뱃지 */
+.muni-rank-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+}
+.muni-rank-badge.rank-high { background: #D4F2E4; color: #1A5C3A; }
+.muni-rank-badge.rank-mid  { background: #EAF4D0; color: #3A5020; }
+.muni-rank-badge.rank-low  { background: #FEFBC0; color: #5A4500; font-weight: 800; }
+
+/* 평균 대비 갭 */
+.panel-muni-gap {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.panel-muni-gap small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.gap-positive { color: #1A5C3A; font-weight: 700; }
+.gap-negative { color: #5A4500; font-weight: 700; }
+
+/* 비교 막대 */
+.panel-bar-wrap { margin-bottom: 8px; }
+.bar-track {
+  height: 10px;
+  background: var(--bg-sage);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.bar-fill.bar-high { background: #5AC89A; }
+.bar-fill.bar-mid  { background: #8BBF50; }
+.bar-fill.bar-low  { background: #C8B800; }
+.bar-max-label {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  text-align: right;
+}
+
+/* 격차 메시지 */
+.panel-muni-msg {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--bg-sage);
+}
+.msg-warn   { color: #5A4500; }
+.msg-warn strong { color: #3A2A00; font-weight: 800; }
+.msg-mid    { color: var(--text-mid); }
+.msg-good   { color: #1A5C3A; }
 
 /* ============================================================
    13. 지역 맞춤 해법
@@ -1239,6 +1330,274 @@ ul { list-style: none; }
   font-size: 0.78rem;
   color: rgba(255,255,255,0.45);
   line-height: 1.7;
+}
+
+/* ============================================================
+   TYPOGRAPHY OVERRIDE
+   작은 타이틀 전반 → Noto Serif KR 적용
+   ============================================================ */
+.info-card h3,
+.issue-card h3,
+.timeline-body h3,
+.regional-card-header h3,
+.policy-title,
+.panel-policies h4,
+.map-panel-data h3,
+.contact-form-wrap h3,
+.credential-item strong,
+.divider-quote strong {
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* ============================================================
+   카드 불릿 리스트 (card-bullets / timeline-bullets)
+   ============================================================ */
+.card-bullets,
+.timeline-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  text-align: left;
+}
+.card-bullets li,
+.timeline-bullets li {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.65;
+}
+.card-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+.timeline-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  font-size: 0.82rem;
+  color: var(--color-navy);
+  top: 3px;
+}
+.card-bullets li strong,
+.timeline-bullets li strong {
+  color: var(--color-navy);
+}
+
+/* ============================================================
+   경력 배지 그리드 (credential-grid)
+   ============================================================ */
+.credential-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.credential-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-cream);
+  border: 1px solid var(--bg-sage);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: var(--transition);
+}
+.credential-item.highlight-cred {
+  background: var(--bg-white);
+  border-color: var(--bg-yellow);
+  border-width: 2px;
+}
+.cred-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.credential-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.credential-item strong {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+.credential-item span {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+.credential-item em {
+  font-style: normal;
+  font-weight: 700;
+  color: #5A4500;
+  background: var(--bg-yellow);
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+/* ============================================================
+   지도 출처 안내
+   ============================================================ */
+.map-source-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  background: var(--bg-white);
+  border: 1px solid var(--bg-sage);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 1.65;
+}
+.source-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  margin-top: 1px;
+}
+.map-source-note strong {
+  color: var(--text-mid);
+  font-weight: 700;
+}
+
+/* ============================================================
+   체크박스 / 라디오 그룹
+   ============================================================ */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-white);
+  border: 1px solid var(--bg-sage);
+  border-radius: var(--radius-sm);
+}
+.checkbox-group label,
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-dark);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.checkbox-group input[type="checkbox"],
+.radio-group input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-navy);
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+/* ============================================================
+   후보 사진 구분자 (candidate-divider)
+   섹션 사이에 배치되는 후보 이미지 스트립
+   ============================================================ */
+.candidate-divider {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+.divider-bg {
+  position: absolute;
+  inset: 0;
+  /*
+   * [구분자 배경 색상 변경 안내]
+   * background 값을 수정하여 배경 그라데이션을 조절할 수 있습니다.
+   * 현재: 크림(F4F1E0) → 세이지(DBDDBA) 그라데이션
+   */
+  background: linear-gradient(120deg, var(--bg-cream) 45%, var(--bg-sage) 100%);
+  z-index: 0;
+}
+
+/* 텍스트 블록 — divider-right (사진이 오른쪽, 텍스트 왼쪽) */
+.divider-right .divider-text {
+  position: relative;
+  z-index: 2;
+  padding: 0 0 0 8%;
+  max-width: 52%;
+}
+/* 텍스트 블록 — divider-left (사진이 왼쪽, 텍스트 오른쪽) */
+.divider-left .divider-text {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  padding: 0 8% 0 0;
+  max-width: 52%;
+  text-align: right;
+}
+
+.divider-quote {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.8;
+}
+.divider-quote strong {
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* 후보 이미지
+   ─────────────────────────────────────────────────────────
+   [이미지 위치 안내]
+   right / left 값으로 가로 위치를 조절하세요 (기본 4%).
+   height로 이미지 크기를 조절하세요 (기본 110%).
+   transform: scaleX(-1) 추가 시 좌우 반전됩니다.
+   ───────────────────────────────────────────────────────── */
+.divider-candidate-img {
+  position: absolute;
+  bottom: 0;
+  height: 115%;
+  width: auto;
+  object-fit: contain;
+  z-index: 1;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.10));
+}
+.divider-right .divider-candidate-img {
+  right: 4%;    /* ← 오른쪽 여백 조절 */
+}
+.divider-left .divider-candidate-img {
+  left: 4%;     /* ← 왼쪽 여백 조절 */
+}
+
+/* 모바일: 사진 반투명 처리로 텍스트 가독성 확보 */
+@media (max-width: 640px) {
+  .candidate-divider { height: 220px; }
+  .divider-quote { font-size: 0.95rem; }
+  .divider-candidate-img { height: 100%; opacity: 0.3; }
+  .divider-right .divider-text,
+  .divider-left .divider-text {
+    max-width: 100%;
+    padding: 0 24px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .credential-grid { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
