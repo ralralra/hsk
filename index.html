@@ -37,44 +37,30 @@
         <li><a href="#policies">핵심 공약</a></li>
         <li><a href="#data-map">데이터 지도</a></li>
         <li><a href="#participation">소통·참여</a></li>
-        <li><a href="#join" class="nav-cta">함께하기</a></li>
+        <li><a href="cardnews.html">웹카드</a></li>
+        <li><a href="dashboard.html">설문현황</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
 
-    <!-- ===== 히어로 ===== -->
+    <!-- ===== 히어로 — 좌(텍스트 35%) / 우(영상 65%) 분할 ===== -->
     <section id="hero">
-      <!--
-        [이미지 교체 안내]
-        아래 hero-bg-img의 src 속성을 후보 사진 경로로 교체하세요.
-        권장 크기: 가로 1920px × 세로 1080px 이상
-        예) src="./images/hero-photo.jpg"
-      -->
-      <div class="hero-bg">
-        <img
-          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=80"
-          alt="충남교육 현장"
-          class="hero-bg-img"
-          id="hero-bg-img"
-        />
-        <div class="hero-overlay"></div>
-      </div>
 
-      <div class="hero-content container">
+      <!-- ── 왼쪽: 텍스트 패널 ── -->
+      <div class="hero-left">
         <p class="hero-eyebrow">현장을 아는 교육감</p>
         <h1 class="hero-title">
-          교육은 실험이 아닙니다.<br />
-          <em>결과로 증명하겠습니다.</em>
+          교육은 실험이<br />아닙니다.<br />
+          <em>결과로<br />증명하겠습니다.</em>
         </h1>
         <p class="hero-subtitle">
-          교사·교감·교장, 교육행정, 기관 운영, 청소년정책까지<br class="pc-only" />
-          두루 경험한 교육 전문가. 충남교육을 말이 아닌 성과로 바꾸겠습니다.
+          교사·교감·교장, 교육행정,<br />기관 운영, 청소년정책까지<br />두루 경험한 교육 전문가.
         </p>
         <div class="hero-buttons">
-          <a href="#policies" class="btn btn-primary">핵심 공약 보기</a>
-          <a href="#about" class="btn btn-outline">후보 소개 보기</a>
+          <a href="#policies" class="btn-hero-primary">핵심 공약 보기</a>
+          <a href="#about"    class="btn-hero-outline">후보 소개</a>
         </div>
         <div class="hero-highlights">
           <span>학교 현장 경험</span>
@@ -83,7 +69,42 @@
           <span>청소년정책 경험</span>
         </div>
       </div>
+
+      <!-- ── 오른쪽: 영상 패널 ── -->
+      <!--
+        [영상 파일 안내]
+        파일명 : ./images/hero-video.mp4
+        권장   : H.264 MP4, 1920×1080, 10~30초 루프, 10MB 이하
+        poster : ./images/hero-poster.jpg (영상 로드 전 표시 썸네일)
+
+        영상 속 인물이 오른쪽에 있다면 .hero-video의
+        object-position 값을 "80% center" 로 바꾸세요.
+      -->
+      <div class="hero-right">
+        <div class="hero-video-wrap">
+          <video
+            class="hero-video"
+            id="hero-bg-video"
+            autoplay muted loop playsinline preload="auto"
+            poster="./images/hero-poster.jpg"
+          >
+            <source src="./images/hero-video.mp4" type="video/mp4" />
+            <img src="./images/hero-poster.jpg" alt="한상경 후보" />
+          </video>
+          <div class="hero-video-fade"></div>
+        </div>
+      </div>
+
+      <!-- 스크롤 힌트 -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
+          <path d="M7 1v12M1 9l6 7 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
     </section>
+
 
     <!-- ===== 왜 한상경인가 ===== -->
     <section id="philosophy" class="section section-cream">
@@ -703,6 +724,9 @@
           <a href="#policies">핵심 공약</a>
           <a href="#data-map">데이터 지도</a>
           <a href="#participation">소통·참여</a>
+          <a href="cardnews.html">웹카드</a>
+          <a href="dashboard.html">설문현황</a>
+
         </nav>
         <div class="footer-social">
           <a href="https://www.facebook.com/hansang.gyeong.364692" title="Facebook" aria-label="Facebook">📘</a>

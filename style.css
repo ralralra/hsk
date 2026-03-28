@@ -354,6 +354,13 @@ ul { list-style: none; }
   object-fit: cover;
   object-position: center;
 }
+.hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -1190,12 +1197,15 @@ ul { list-style: none; }
 /* 참여 폼 */
 .contact-form-wrap {
   max-width: 640px;
+  width: 100%;            /* 부모보다 넓어지지 않도록 */
   margin: 0 auto;
   background: var(--bg-cream);
   border-radius: var(--radius-lg);
   padding: 36px 32px;
   text-align: left;
   box-shadow: var(--shadow-sm);
+  box-sizing: border-box; /* padding 포함 너비 계산 */
+  overflow: hidden;       /* 자식 요소 넘침 방지 */
 }
 .contact-form-wrap h3 {
   font-family: 'Noto Serif KR', serif;
@@ -1219,6 +1229,8 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;     /* grid 셀 내부에서 넘침 방지 */
+  width: 100%;
 }
 .form-group label {
   font-size: 0.82rem;
@@ -1238,6 +1250,10 @@ ul { list-style: none; }
   transition: border-color var(--transition);
   outline: none;
   resize: vertical;
+  width: 100%;            /* ← 핵심: 부모 너비에 맞춤 */
+  box-sizing: border-box; /* ← padding 포함 너비 계산 */
+  min-width: 0;           /* ← grid 자식 요소 넘침 방지 */
+  max-width: 100%;        /* ← 절대 부모 초과 금지 */
 }
 .form-group input:focus,
 .form-group select:focus,
@@ -1701,7 +1717,11 @@ ul { list-style: none; }
   .section-title { font-size: 1.5rem; }
 
   /* contact form */
-  .contact-form-wrap { padding: 24px 20px; }
+  .contact-form-wrap {
+    padding: 20px 16px;     /* 모바일 패딩 더 좁게 */
+    border-radius: var(--radius-md);
+  }
+  .form-row { grid-template-columns: 1fr; }  /* 성함/연령 세로 배치 */
 
   /* participation buttons */
   .participation-buttons { flex-direction: column; align-items: center; }
