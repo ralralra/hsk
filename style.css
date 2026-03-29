@@ -756,21 +756,21 @@ ul { list-style: none; }
 }
 
 /* ============================================================
-   10. 7대 정책 카드 + 팝업 모달
+   10. 7대 정책 카드 (Flexbox 레이아웃으로 변경)
    ============================================================ */
 .policies-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;      /* Grid 대신 Flex 사용 */
+  flex-wrap: wrap;    /* 줄바꿈 허용 */
+  justify-content: center; /* 자식 요소들을 가운데로 정렬 */
   gap: 16px;
   margin-top: 16px;
 }
 
-/* 7번째 카드 - 전체 폭 */
-.policies-grid .policy-card:last-child {
-  grid-column: span 1;
-}
-
 .policy-card {
+  /* 4개씩 배치될 때의 너비 계산 (간격 16px 제외) */
+  width: calc(25% - 12px); 
+  min-width: 250px;   /* 너무 작아지지 않게 최소 너비 설정 */
+  
   background: var(--bg-white);
   border: 1px solid var(--bg-sage);
   border-radius: var(--radius-lg);
@@ -781,6 +781,21 @@ ul { list-style: none; }
   position: relative;
   overflow: hidden;
 }
+
+/* 모바일 대응: 화면이 좁아지면 2개 또는 1개씩 보이게 조절 */
+@media (max-width: 1024px) {
+  .policy-card {
+    width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  .policy-card {
+    width: 100%;
+  }
+}
+
+/* 기존 스타일 유지 */
 .policy-card::before {
   content: '';
   position: absolute;
