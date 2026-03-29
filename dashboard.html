@@ -734,11 +734,26 @@
     const supportKey = k(k => k.includes('지지'));
     const policyKey  = k(k => k.includes('공약'));
 
+    // 이름 마스킹 함수
+    function maskName(name) {
+  if (!name || name === '—') return name;
+  name = name.trim();
+  
+  // 이름이 한 글자 이상인 경우
+  if (name.length > 0) {
+    // 첫 번째 글자(성) + 나머지 글자 수만큼 '*' 반복
+    return name[0] + '*'.repeat(name.length - 1);
+  }
+  
+  return name;
+}
+
     recent.forEach(row => {
+      let name = maskName(row[nameKey] || '—');
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row[timeKey]||'—'}</td>
-        <td>${row[nameKey]||'—'}</td>
+        <td>${name}</td>
         <td>${row[ageKey]||'—'}</td>
         <td>${row[regionKey]||'—'}</td>
         <td>${row[supportKey]||'—'}</td>
@@ -746,6 +761,7 @@
       tbody.appendChild(tr);
     });
   }
+  
 
   /* ── 오류 패널 ── */
   function showError(message) {
