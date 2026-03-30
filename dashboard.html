@@ -13,17 +13,17 @@
        CSS 변수
        ============================================================ */
     :root {
-      --navy:    #1E3A8A;
-      --navy-dk: #163080;
+      --navy:    #2A2520;;
+      --navy-dk: #201c19;
       --cream:   #F4F1E0;
-      --sage:    #DBDDBA;
+      --sage:    #d8dac1;
       --mint:    #A8E1C2;
-      --yellow:  #E1DB00;
-      --green:   #CBE0A0;
+      --yellow:  #dde482;
+      --green:   #bfea69;
       --white:   #FFFFFF;
       --text:    #111827;
-      --mid:     #374151;
-      --light:   #6B7280;
+      --mid:     #514f37;
+      --light:   #6b7d80;
 
       --radius:  8px;       /* 카드 기본 라운드 */
       --radius-sm: 5px;
@@ -408,9 +408,93 @@
     @media (max-width: 400px) {
       .kpi-grid { grid-template-columns: 1fr 1fr; }
     }
+
+
+
+    /* 비밀번호 게이트 스타일 */
+#admin-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--cream); /* 기존 테마와 통일감 있는 네이비 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.gate-box {
+  background: var(--white);
+  padding: 40px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.gate-box h2 {
+  font-family: 'Noto Serif KR', serif;
+  color: var(--navy);
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.gate-box p {
+  color: var(--light);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.gate-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--sage);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+}
+
+.gate-input:focus {
+  border-color: var(--navy);
+}
+
+.btn-gate {
+  width: 100%;
+  padding: 12px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gate-error {
+  color: #C0392B;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  display: none; /* 기본적으로 숨김 */
+}
   </style>
+
+
 </head>
 <body>
+
+  <div id="admin-gate">
+  <div class="gate-box">
+    <h2>관리자 인증</h2>
+    <p>관리자만 접근이 가능합니다.<br>비밀번호를 입력해주세요.</p>
+    <input type="password" id="adminPassword" class="gate-input" placeholder="비밀번호 입력" onkeypress="if(event.keyCode==13) checkPassword()">
+    <button class="btn-gate" onclick="checkPassword()">확인</button>
+    <div id="gateError" class="gate-error">비밀번호가 일치하지 않습니다.</div>
+  </div>
+</div>
+
+
 <div class="wrap">
 
   <!-- ── 헤더 ── -->
@@ -437,6 +521,9 @@
 
 </div><!-- /wrap -->
 
+
+
+
 <script>
   /* ============================================================
      API 설정
@@ -448,7 +535,49 @@
   let isLoading = false;
 
   /* ── 차트 공통 팔레트 ── */
-  const PALETTE = ['#1E3A8A','#A8E1C2','#E1DB00','#CBE0A0','#DBDDBA','#6B7280','#C8A800'];
+  const PALETTE = [
+  '#FF8E42',
+  '#204444',
+  '#679A9A',
+  '#909A92',
+  '#C9601A',
+  '#D3D5D6',
+  '#C7CEA3'];
+
+
+
+
+/* 비밀번호 체크 함수 */
+function checkPassword() {
+  const passwordInput = document.getElementById('adminPassword').value;
+  const gate = document.getElementById('admin-gate');
+  const errorMsg = document.getElementById('gateError');
+
+  const MASTER_PASSWORD = "0330"; 
+
+  if (passwordInput === MASTER_PASSWORD) {
+    // 비밀번호가 맞으면 게이트 삭제
+    gate.style.display = 'none';
+    // 성공 시 데이터 로드 시작 (기존 loadData 함수 호출)
+    loadData();
+  } else {
+    // 틀리면 에러 메시지 표시
+    errorMsg.style.display = 'block';
+    document.getElementById('adminPassword').value = "";
+    document.getElementById('adminPassword').focus();
+  }
+}
+
+
+
+
+// 기존 window.addEventListener 부분을 아래와 같이 수정하여 
+// 인증 전에는 데이터를 불러오지 않도록 조절합니다.
+window.addEventListener('load', () => {
+  if (!API_URL) { showSetupRequired(); }
+  // loadData(); <- 이 부분을 지우거나 주석 처리하세요. 인증 후에 호출됩니다.
+});
+
 
   window.addEventListener('load', () => {
     if (!API_URL) { showSetupRequired(); }
@@ -662,7 +791,7 @@
       type: 'bar',
       data: {
         labels: Object.keys(aCounts),
-        datasets: [{ label: '응답 수', data: Object.values(aCounts), backgroundColor: '#1E3A8A', borderRadius: 4, borderSkipped: false }]
+        datasets: [{ label: '응답 수', data: Object.values(aCounts), backgroundColor: '#94C5A2', borderRadius: 4, borderSkipped: false }]
       },
       options: {
         responsive: true,
@@ -682,7 +811,7 @@
       type: 'bar',
       data: {
         labels: rSorted.map(e=>e[0]),
-        datasets: [{ label: '응답 수', data: rSorted.map(e=>e[1]), backgroundColor: '#A8E1C2', borderRadius: 4, borderSkipped: false }]
+        datasets: [{ label: '응답 수', data: rSorted.map(e=>e[1]), backgroundColor: '#679A9A', borderRadius: 4, borderSkipped: false }]
       },
       options: {
         indexAxis: 'y',
@@ -706,7 +835,7 @@
       type: 'bar',
       data: {
         labels: iSorted.map(e=>e[0]),
-        datasets: [{ label: '선택 횟수', data: iSorted.map(e=>e[1]), backgroundColor: '#C8A800', borderRadius: 4, borderSkipped: false }]
+        datasets: [{ label: '선택 횟수', data: iSorted.map(e=>e[1]), backgroundColor: '#FDD457', borderRadius: 4, borderSkipped: false }]
       },
       options: {
         indexAxis: 'y',
