@@ -9,7 +9,7 @@
 :root {
   /* ── 브랜드 색상 ─────────────────────────── */
   --color-navy:   #2A2520;   /* 주색상 — 진한 차콜브라운 (중립·무당파) */
-  --color-amber:  #C8A800;   /* 강조색 — 골드 앰버 */
+  --color-amber:  #e5cd54;   /* 강조색 — 골드 앰버 */
 
   /* ── 배경 팔레트 ─────────────────────────── */
   --bg-white:     #FFFFFF;   /* 순백 */
@@ -346,7 +346,7 @@ ul { list-style: none; }
    * 텍스트 더 좁게 → "30fr 70fr"
    * 텍스트 더 넓게 → "42fr 58fr"
    */
-  grid-template-columns: 28fr 72fr;
+  grid-template-columns: 30fr 70fr;
   overflow: hidden;
 }
 
